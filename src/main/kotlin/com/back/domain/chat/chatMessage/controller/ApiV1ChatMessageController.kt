@@ -1,0 +1,74 @@
+package com.back.domain.chat.chatMessage.controller
+
+import com.back.domain.chat.chatMessage.entity.ChatMessage
+import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+@RestController
+@RequestMapping("/api/v1/chat/rooms/{chatRoomId}/messages")
+@CrossOrigin(origins = ["https://cdpn.io"])
+class ApiV1ChatMessageController {
+    private val chatMessagesByRoomId: MutableMap<Int, MutableList<ChatMessage>> = mutableMapOf(
+        1 to mutableListOf(
+            ChatMessage(
+                1,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                1,
+                "김철수",
+                "풋살하실 분 계신가요?"
+            ),
+            ChatMessage(
+                2,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                1,
+                "이영희",
+                "네, 저요!"
+            )
+        ),
+        2 to mutableListOf(
+            ChatMessage(
+                3,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                2,
+                "박철수",
+                "농구하실 분 계신가요?"
+            ),
+            ChatMessage(
+                4,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                2,
+                "김영희",
+                "네, 저요!"
+            )
+        ),
+        3 to mutableListOf(
+            ChatMessage(
+                5,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                3,
+                "이철수",
+                "야구하실 분 계신가요?"
+            ),
+            ChatMessage(
+                6,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                3,
+                "박영희",
+                "네, 저요!"
+            )
+        )
+    )
+
+
+    @GetMapping
+    fun getItems(@PathVariable chatRoomId: Int): List<ChatMessage> =
+        chatMessagesByRoomId[chatRoomId]
+            ?.toList()
+            ?: emptyList()
+}
