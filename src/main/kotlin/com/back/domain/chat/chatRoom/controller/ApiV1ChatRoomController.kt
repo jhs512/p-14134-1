@@ -2,6 +2,7 @@ package com.back.domain.chat.chatRoom.controller
 
 import com.back.domain.chat.chatRoom.entity.ChatRoom
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
@@ -32,4 +33,11 @@ class ApiV1ChatRoomController {
 
     @GetMapping
     fun getItems() = chatRooms
+
+    @GetMapping("/{id}")
+    fun getItem(@PathVariable id: Int): ChatRoom? =
+        findById(id)
+
+    private fun findById(id: Int): ChatRoom? =
+        chatRooms.find { it.id == id }
 }
