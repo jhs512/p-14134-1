@@ -71,4 +71,31 @@ class ApiV1ChatMessageController {
         chatMessagesByRoomId[chatRoomId]
             ?.toList()
             ?: emptyList()
+
+
+    data class ChatMessageWriteReqBody(
+        val writerName: String,
+        val content: String
+    )
+
+    @PostMapping
+    fun write(
+        @PathVariable chatRoomId: Int,
+        @RequestBody reqBody: ChatMessageWriteReqBody
+    ): ChatMessage {
+        val chatMessages = chatMessagesByRoomId.getOrPut(chatRoomId) { mutableListOf() }
+
+        val chatMessage = ChatMessage(
+            chatMessages.size + 1,
+            LocalDateTime.now(),
+            LocalDateTime.now(),
+            chatRoomId,
+            reqBody.writerName,
+            reqBody.content
+        )
+
+        chatMessages.add(chatMessage)
+
+        return chatMessage
+    }
 }
