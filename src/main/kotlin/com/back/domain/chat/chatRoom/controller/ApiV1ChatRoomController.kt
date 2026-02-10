@@ -46,6 +46,8 @@ class ApiV1ChatRoomController {
     fun createItem(
         @RequestBody reqBody: ChatCreateRoomReqBody
     ): ChatRoom {
+        Thread.sleep(1_000)
+
         val newId = (chatRooms.maxOfOrNull { it.id } ?: 0) + 1
 
         val newChatRoom = ChatRoom(
