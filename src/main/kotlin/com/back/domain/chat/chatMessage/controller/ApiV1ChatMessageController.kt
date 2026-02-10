@@ -67,8 +67,12 @@ class ApiV1ChatMessageController {
 
 
     @GetMapping
-    fun getItems(@PathVariable chatRoomId: Int): List<ChatMessage> =
+    fun getItems(
+        @PathVariable chatRoomId: Int,
+        @RequestParam(defaultValue = "-1") afterChatMessageId: Int,
+    ): List<ChatMessage> =
         chatMessagesByRoomId[chatRoomId]
+            ?.filter { it.id > afterChatMessageId }
             ?.toList()
             ?: emptyList()
 
