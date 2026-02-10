@@ -8,10 +8,12 @@ import java.time.LocalDateTime
 @RequestMapping("/api/v1/chat/rooms/{chatRoomId}/messages")
 @CrossOrigin(origins = ["https://cdpn.io"])
 class ApiV1ChatMessageController {
+    private var lastChatMessageId = 0
+
     private val chatMessagesByRoomId: MutableMap<Int, MutableList<ChatMessage>> = mutableMapOf(
         1 to mutableListOf(
             ChatMessage(
-                1,
+                ++lastChatMessageId,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 1,
@@ -19,7 +21,7 @@ class ApiV1ChatMessageController {
                 "풋살하실 분 계신가요?"
             ),
             ChatMessage(
-                2,
+                ++lastChatMessageId,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 1,
@@ -29,7 +31,7 @@ class ApiV1ChatMessageController {
         ),
         2 to mutableListOf(
             ChatMessage(
-                3,
+                ++lastChatMessageId,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 2,
@@ -37,7 +39,7 @@ class ApiV1ChatMessageController {
                 "농구하실 분 계신가요?"
             ),
             ChatMessage(
-                4,
+                ++lastChatMessageId,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 2,
@@ -47,7 +49,7 @@ class ApiV1ChatMessageController {
         ),
         3 to mutableListOf(
             ChatMessage(
-                5,
+                ++lastChatMessageId,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 3,
@@ -55,7 +57,7 @@ class ApiV1ChatMessageController {
                 "야구하실 분 계신가요?"
             ),
             ChatMessage(
-                6,
+                ++lastChatMessageId,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 3,
@@ -90,7 +92,7 @@ class ApiV1ChatMessageController {
         val chatMessages = chatMessagesByRoomId.getOrPut(chatRoomId) { mutableListOf() }
 
         val chatMessage = ChatMessage(
-            chatMessages.size + 1,
+            ++lastChatMessageId,
             LocalDateTime.now(),
             LocalDateTime.now(),
             chatRoomId,
